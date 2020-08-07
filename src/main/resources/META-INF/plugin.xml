@@ -1,19 +1,49 @@
 <idea-plugin>
-    <id>com.github.tjdevries.jupyterascendingpycharm</id>
-    <name>jupyter_ascending.pycharm</name>
-    <vendor>tjdevries</vendor>
+    <id>com.github.untitled-ai.jupyterascendingpycharm</id>
+    <vendor>untitled-ai</vendor>
+
+    <name>Jupyter Ascending</name>
+    <description>Jupyter Ascending wrapper for Pycharm. This will help interface with the plugin.</description>
+
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.python-core-capable</depends>
+
+    <!--    It would be cool to use kotlin...  -->
+    <!--    <extensions defaultExtensionNs="com.intellij">-->
+    <!--        <applicationService serviceImplementation="com.github.tjdevries.jupyterascendingpycharm.services.MyApplicationService"/>-->
+    <!--        <projectService serviceImplementation="com.github.tjdevries.jupyterascendingpycharm.services.MyProjectService"/>-->
+    <!--    </extensions>-->
+
+    <!--    <projectListeners>-->
+    <!--        <listener class="com.github.tjdevries.jupyterascendingpycharm.listeners.MyProjectManagerListener"-->
+    <!--                  topic="com.intellij.openapi.project.ProjectManagerListener"/>-->
+    <!--    </projectListeners>-->
+
+    <actions>
+        <action id="JupyterSyncAction" class="JupyterSyncAction" text="Jupyter: Sync">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+        <action id="JupyterExecuteAction" class="JupyterExecuteAction" text="Jupyter: Execute"
+                description="Execute the current cell">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt E"/>
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+    </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.tjdevries.jupyterascendingpycharm.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.tjdevries.jupyterascendingpycharm.services.MyProjectService"/>
+        <projectConfigurable
+                parentId="tools"
+                instance="org.company.ProjectSettingsConfigurable"
+                id="org.company.ProjectSettingsConfigurable"
+                displayName="Jupyter Notebook Python Executable"
+                nonDefaultProject="true"
+        />
     </extensions>
 
-    <projectListeners>
-        <listener class="com.github.tjdevries.jupyterascendingpycharm.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </projectListeners>
+    <applicationListeners>
+        <listener class="JupyterSyncFileListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
+    </applicationListeners>
 </idea-plugin>
