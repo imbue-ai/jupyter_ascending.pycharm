@@ -9,7 +9,8 @@
     <!-- Product and plugin compatibility requirements -->
     <!-- https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.modules.python-core-capable</depends>
+    <!-- We may want to come back to this if we want to let uses choose their own python interpreter-->
+    <!-- <depends>com.intellij.modules.python-core-capable</depends>-->
 
     <!--    It would be cool to use kotlin...  -->
     <!--    <extensions defaultExtensionNs="com.intellij">-->
